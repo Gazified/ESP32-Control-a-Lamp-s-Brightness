@@ -1,10 +1,9 @@
 # BCA188 – Laboratory Activity: Control a Lamp's Brightness
 
 
+## Sketch 
 
- Sketch (brightnessSetting and switchOn tested for each combination)
 
-The decision from Example 5 was moved into a function, per step 4–5 of the activity:
 
 ```cpp
 #include <Arduino.h>
@@ -50,41 +49,38 @@ For each trial, `brightnessSetting` and `switchOn` at the top of `setup()` were 
 | 50  | Off | 0   | 0   |
 | 100 | Off | 0   | 0   |
 
-## Explanation of the function's parameters and return value
+Explanation of the function's parameters and return value
 
-`getLampBrightness(bool switchOn, int brightnessSetting)` takes two parameters: `switchOn`, a `bool` describing whether the lamp's switch is currently on, and `brightnessSetting`, an `int` holding the saved brightness (0–100). Inside the function, an `if`/`else` checks `switchOn`: when it is `true`, the function returns `brightnessSetting` unchanged, so the lamp shows the saved value; when it is `false`, the function returns `0`, forcing the lamp off regardless of what `brightnessSetting` holds. The caller passes in two arguments (the current `switchOn` and `brightnessSetting`) and receives a single `int` back through `return`, which `setup()` stores in `lampBrightness` and then prints. Because `brightnessSetting` itself is never modified inside the function, turning the switch off never erases the saved setting — it only changes what the lamp currently displays.
+getLampBrightness() takes two parameters: switchOn (bool) and brightnessSetting (int). 
+If switchOn is true, it returns brightnessSetting. If false, it returns 0. The returned value is stored in lampBrightness and printed. Note that brightnessSetting itself doesn't change — only what gets returned changes.
 
-## Coding Check
+### Coding Check
 
-**1. In `int brightnessSetting = 75;`, identify the data type, variable name, and initial value. How would you change the value to 50?**
+1. In int brightnessSetting = 75;, identify the data type, variable name, and initial value. How would you change the value to 50?
 
-Data type: `int`. Variable name: `brightnessSetting`. Initial value: `75`. To change it to 50, use an assignment (no type before the name, since it is already declared): `brightnessSetting = 50;`
+    Type: int, name: brightnessSetting, value: 75. To change it: brightnessSetting = 50;
 
-**2. Why is `bool` suitable for `switchOn`, while `int` is suitable for `brightnessSetting`?**
+2. Why is bool suitable for switchOn, while int is suitable for brightnessSetting?
 
-`switchOn` only ever needs to represent one of two conditions — on or off — which is exactly what a Boolean models. `brightnessSetting` instead needs to hold a whole-number value across a range (0 to 100), which a `bool` cannot represent, so an `int` (a type that can store and be reassigned to any whole number in range) is the appropriate choice.
+    switchOn only has two possible states (on/off), so bool fits. brightnessSetting can be any number from 0–100, so it needs int.
 
-**3. Predict the output when `brightnessSetting` is 80 and `switchOn` is false.**
+3. Predict the output when brightnessSetting is 80 and switchOn is false.
 
-```
-Brightness setting: 80
-Lamp brightness: 0
-```
+    Brightness setting: 80
+    Lamp brightness: 0
 
-The saved setting is still 80 (and is printed as such), but because the switch is off, `getLampBrightness()` returns 0, so the lamp brightness is 0.
+    Switch is off, so the function returns 0 even though the setting is still 80.
 
-**4. Are `switchOn` and `switchon` the same variable? Explain.**
+4. Are switchOn and switchon the same variable? Explain.
 
-No. C++ is case-sensitive, so `switchOn` and `switchon` are two different identifiers. Using `switchon` anywhere in the program would either refer to an unrelated/undeclared name or cause a compiler error, not the intended variable.
+    No, they're different variables. C++ is case-sensitive.
 
-**5. What values are passed to `getLampBrightness()`, and what does it return?**
+5. What values are passed to getLampBrightness(), and what does it return?
 
-It receives two arguments: the current `switchOn` (a `bool`) and the current `brightnessSetting` (an `int`). It returns a single `int`: `brightnessSetting` when `switchOn` is `true`, or `0` when `switchOn` is `false`.
+    It takes switchOn and brightnessSetting as arguments and returns an int — either the setting or 0.
 
-**6. If `lampBrightness` is declared inside `setup()`, can `loop()` access it directly? Explain.**
+6. If lampBrightness is declared inside setup(), can loop() access it directly? Explain.
 
-No. `lampBrightness` is a local variable — its scope is limited to the block/function in which it was declared (`setup()`). Once `setup()` finishes, that name is no longer visible, so `loop()` cannot reference it by name. To share the value with `loop()`, it would need to be declared as a global variable instead.
+    No. lampBrightness is local to setup(), so loop() can't see it. It would need to be global.
 
----
 
-**Checks satisfied:** when the switch is on, the lamp brightness matches the setting (rows 1–3); when the switch is off, the lamp brightness is 0 regardless of the setting (rows 4–6); and turning the switch off never changes the stored `brightnessSetting` value itself, only the returned `lampBrightness`.
