@@ -39,7 +39,7 @@ void loop() {
 
 For each trial, `brightnessSetting` and `switchOn` at the top of `setup()` were changed to the six combinations below, and the sketch was re-run for each one.
 
-## 3. Completed Results Table
+##  Completed Results Table
 
 | Brightness setting | Switch state | Expected lamp brightness | Observed output |
 |---|---|---|---|
