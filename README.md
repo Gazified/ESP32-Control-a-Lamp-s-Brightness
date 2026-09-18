@@ -1,8 +1,8 @@
 # BCA188 – Laboratory Activity: Control a Lamp's Brightness
 
-Completed lab report — Example 5 extended into a reusable function, as required by the activity.
 
-## 1–2. Sketch (brightnessSetting and switchOn tested for each combination)
+
+ Sketch (brightnessSetting and switchOn tested for each combination)
 
 The decision from Example 5 was moved into a function, per step 4–5 of the activity:
 
